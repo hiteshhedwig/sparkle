@@ -7,8 +7,11 @@ import (
 	"os"
 	"time"
 
+	"github.com/jedib0t/go-pretty/v6/table"
 	log "github.com/sirupsen/logrus"
 )
+
+const localfile = "./config.cfg"
 
 type CompletedTask struct {
 	Index int
@@ -35,6 +38,21 @@ type Config struct {
 	Cancelledtasks []CancelledTask
 }
 
+func (c *Config) ListAllTasks() {
+
+	t := table.NewWriter()
+	t.SetOutputMirror(os.Stdout)
+	t.AppendHeader(table.Row{"Index", "Task", "Time"})
+
+	for _, currenttask := range c.Currenttasks {
+		t.AppendSeparator()
+		t.AppendRow([]interface{}{currenttask.Index, currenttask.Task, currenttask.Time})
+	}
+	t.SetStyle(table.StyleRounded)
+	t.Render()
+
+}
+
 func (c *Config) AddToCurrentTasks(task string) {
 
 	var index int
@@ -53,8 +71,6 @@ func (c *Config) AddToCurrentTasks(task string) {
 	}
 	c.Currenttasks = append(c.Currenttasks, curr)
 }
-
-const localfile = "./config.cfg"
 
 func (config Config) SaveConfig() {
 
