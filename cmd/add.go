@@ -19,6 +19,7 @@ import (
 	"fmt"
 	"strings"
 
+	"github.com/kyokomi/emoji"
 	"github.com/spf13/cobra"
 )
 
@@ -26,22 +27,23 @@ import (
 var addCmd = &cobra.Command{
 	Use:   "add",
 	Short: "Add Todo to your list of tasks",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
+	Long: `Usage of the command goes like. For example:
 
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	sparkle add Complete prototyping by 9PM
+`,
 	Run: func(cmd *cobra.Command, args []string) {
 		if len(args) == 0 {
 			cmd.Help()
 			return
 		}
-		fmt.Println("add called", args)
+		//fmt.Println("add called", args)
 		str := strings.Join(args, " ")
-		//adding to struct then save config file
+		//adding then save config file
 		datafile.AddToCurrentTasks(str)
 		datafile.SaveConfig()
+		disp := emoji.Sprintf(":memo: Added to List !! - %s", str)
+		fmt.Print(disp)
+		fmt.Printf("\n")
 
 	},
 }
