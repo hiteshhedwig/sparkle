@@ -5,26 +5,27 @@ import (
 	"fmt"
 	"io/ioutil"
 	"os"
+	"time"
 
 	log "github.com/sirupsen/logrus"
 )
 
 type CompletedTask struct {
-	index int
-	task  string
-	time  string //time at which it got complete
+	Index int
+	Task  string
+	Time  string //time at which it got complete
 }
 
 type CurrentTasks struct {
-	index int
-	task  string
-	time  string //time at which it was created
+	Index int
+	Task  string
+	Time  string
 }
 
 type CancelledTask struct {
-	index int
-	task  string
-	time  string //time at which it got cancelled
+	Index int
+	Task  string
+	Time  string //time at which it got cancelled
 }
 
 type Config struct {
@@ -34,9 +35,54 @@ type Config struct {
 	Cancelledtasks []CancelledTask
 }
 
+func (c *Config) AddToCurrentTasks(task string) {
+
+	var index int
+
+	switch len(c.Currenttasks) {
+	case 0:
+		index = 1
+	default:
+		index = len(c.Currenttasks) + 1
+	}
+
+	curr := CurrentTasks{
+		Task:  task,
+		Index: index,
+		Time:  time.Now().Format("2006-01-02 3:4:5 pm"),
+	}
+	c.Currenttasks = append(c.Currenttasks, curr)
+}
+
+const localfile = "./config.cfg"
+
+func (config Config) SaveConfig() {
+
+	configBytes, err := json.MarshalIndent(config, "", "   ")
+	if err != nil {
+		fmt.Print("Something Wrong happened", err)
+	}
+
+	err = ioutil.WriteFile(localfile, configBytes, os.ModePerm)
+
+	if err != nil {
+		fmt.Print("Error writing device config!", err)
+	}
+
+	fmt.Print("Saved!\n")
+
+}
+
+func fileExists(filename string) bool {
+	info, err := os.Stat(filename)
+	if os.IsNotExist(err) {
+		return false
+	}
+	return !info.IsDir()
+}
+
 func LoadConfig() (*Config, error) {
 
-	const localfile = "./config.cfg"
 	var config Config
 
 	if !fileExists(localfile) {
@@ -72,12 +118,4 @@ func LoadConfig() (*Config, error) {
 	}
 
 	return &config, nil
-}
-
-func fileExists(filename string) bool {
-	info, err := os.Stat(filename)
-	if os.IsNotExist(err) {
-		return false
-	}
-	return !info.IsDir()
 }
