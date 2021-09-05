@@ -23,9 +23,12 @@ import (
 	"github.com/spf13/cobra"
 
 	"github.com/spf13/viper"
+
+	conn "sparkle/config"
 )
 
 var cfgFile string
+var datafile *conn.Config
 
 var str string
 
@@ -48,6 +51,11 @@ to quickly create a Cobra application.`,
 // This is called by main.main(). It only needs to happen once to the rootCmd.
 func Execute() {
 	cobra.CheckErr(rootCmd.Execute())
+
+	//curr := time.Now()
+
+	//s := curr.Local().Format("2006-January-02") //"2006-01-02 15:04:05" //"2006-01-02 3:4:5 pm"
+	//print(s)
 }
 
 func init() {
@@ -57,6 +65,25 @@ func init() {
 
 	str = emoji.Sprint(":clipboard: A Pure Go Sparkle Todo CLI comes with a simple webservice. Which helps you to organize task much better!")
 	rootCmd.Long = str
+
+	datafile, _ = conn.LoadConfig()
+	//print(datafile.Project)
+	/*
+		var conff con.Config
+
+		viper.AddConfigPath(".")
+		viper.SetConfigType("json")
+		viper.SetConfigName("something")
+
+		if err := viper.ReadInConfig(); err != nil {
+			fmt.Printf("Error reading config file, %s", err)
+		}
+
+		err := viper.Unmarshal(&conff)
+		if err != nil {
+			fmt.Printf("Unable to decode into struct, %v", err)
+		}
+	*/
 
 	cobra.OnInitialize(initConfig)
 
@@ -69,6 +96,7 @@ func init() {
 	// Cobra also supports local flags, which will only run
 	// when this action is called directly.
 	rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+
 }
 
 // initConfig reads in config file and ENV variables if set.
@@ -76,15 +104,18 @@ func initConfig() {
 	if cfgFile != "" {
 		// Use config file from the flag.
 		viper.SetConfigFile(cfgFile)
+
 	} else {
 		// Find home directory.
 		home, err := os.UserHomeDir()
 		cobra.CheckErr(err)
 
 		// Search config in home directory with name ".sparkle" (without extension).
+
 		viper.AddConfigPath(home)
 		viper.SetConfigType("yaml")
 		viper.SetConfigName(".sparkle")
+
 	}
 
 	viper.AutomaticEnv() // read in environment variables that match
