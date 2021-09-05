@@ -38,7 +38,7 @@ type Config struct {
 	Cancelledtasks []CancelledTask
 }
 
-func (c *Config) ListAllTasks() {
+func (c *Config) ListAllCurrentTasks() {
 
 	t := table.NewWriter()
 	t.SetOutputMirror(os.Stdout)
@@ -47,6 +47,45 @@ func (c *Config) ListAllTasks() {
 	for _, currenttask := range c.Currenttasks {
 		t.AppendSeparator()
 		t.AppendRow([]interface{}{currenttask.Index, currenttask.Task, currenttask.Time})
+	}
+	t.SetStyle(table.StyleRounded)
+	t.Render()
+
+}
+
+func (c *Config) ListTasksCatWise() {
+
+	var typetasks [][]interface{}
+
+	t := table.NewWriter()
+	t.SetOutputMirror(os.Stdout)
+	t.AppendHeader(table.Row{"Index", "Task", "Time"})
+
+	//typetask := []interface{}{000, "Current Task", " --"}
+	typetasks = append(typetasks, []interface{}{"--", "Current Task", " --"})
+	typetasks = append(typetasks, []interface{}{"--", "Completed Task", " --"})
+	typetasks = append(typetasks, []interface{}{"--", "Cancelled Task", " --"})
+
+	for idx, typetask := range typetasks {
+		t.AppendSeparator()
+		t.AppendRow(typetask)
+		t.AppendSeparator()
+
+		switch idx {
+		case 0:
+			for _, tsk := range c.Currenttasks {
+				t.AppendRow([]interface{}{tsk.Index, tsk.Task, tsk.Time})
+			}
+		case 1:
+			for _, tsk := range c.Completedtasks {
+				t.AppendRow([]interface{}{tsk.Index, tsk.Task, tsk.Time})
+			}
+		case 2:
+			for _, tsk := range c.Cancelledtasks {
+				t.AppendRow([]interface{}{tsk.Index, tsk.Task, tsk.Time})
+			}
+		}
+
 	}
 	t.SetStyle(table.StyleRounded)
 	t.Render()

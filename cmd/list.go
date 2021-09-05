@@ -22,18 +22,21 @@ import (
 // listCmd represents the list command
 var listCmd = &cobra.Command{
 	Use:   "list",
-	Short: "Prints out all the bucket history",
-	Long: `Prints out all the bucket history
+	Short: "Prints out all the current task in the bucket",
+	Long: `Prints out all the current task in the bucket
 	For example:
-		sparkle list --all
+		sparkle list   //Prints out all the tasks
+		sparkle list --cat //Prints out all the tasks categorywise
 	`,
 	Run: func(cmd *cobra.Command, args []string) {
-		allstatus, _ := cmd.Flags().GetBool("all")
-		if allstatus {
+		allstatus, _ := cmd.Flags().GetBool("cat")
+		//category, _ := cmd.Flags().GetBool("cat")
+		if !allstatus {
 			print("All status \n")
-			datafile.ListAllTasks()
+			datafile.ListAllCurrentTasks()
 		} else {
 			print("No status \n")
+			datafile.ListTasksCatWise()
 		}
 	},
 }
@@ -50,5 +53,10 @@ func init() {
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
 	// listCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
-	listCmd.Flags().Bool("all", false, "Lists all the tasks in the bucket history")
+	//listCmd.Flags().Bool("all", false, "Lists all the tasks in the bucket history")
+
+	listCmd.Flags().Bool("cat", false, "Lists all the tasks category wise")
+
+	//show list prioritywise. Assign priority! like @critical, @inoneHour something like these
+
 }
