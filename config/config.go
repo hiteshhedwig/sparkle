@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"os"
+	"strings"
 	"time"
 
 	"github.com/jedib0t/go-pretty/v6/table"
@@ -36,6 +37,69 @@ type Config struct {
 	Currenttasks   []CurrentTasks
 	Completedtasks []CompletedTask
 	Cancelledtasks []CancelledTask
+}
+
+type Conversion interface {
+	ToCancelledTask() *CancelledTask
+	ToCurrentTask() *CurrentTasks
+	ToCompletedTask() *CompletedTask
+}
+
+//user interface here!
+func (c *Config) ToCancelledTask(com CurrentTasks) *CancelledTask {
+
+	log.Info("In here bro!")
+
+	return &CancelledTask{
+		Index: com.Index,
+		Task:  com.Task,
+		Time:  time.Now().Format("2006-01-02 3:4:5 pm"),
+	}
+
+}
+
+//Cancel tasks: //should i implement with a linked list of tasks?
+func (c *Config) Cancel(idx int) {
+
+	var userin string
+
+	dumptask := c.Currenttasks[idx-1]
+	log.Info(dumptask)
+	fmt.Println("Are you sure you want to cancel this task? ", dumptask.Task)
+	fmt.Print("Type yes/no to confirm cancellation : ")
+	fmt.Scanf("%s", &userin)
+
+	switch strings.ToLower(userin) {
+	case "no":
+		fmt.Println("Aborting")
+		return
+	case "yes":
+		fmt.Println("ok to cancel this task")
+		c.CancelforReal(idx)
+	default:
+		fmt.Println("Aborting")
+		return
+	}
+
+}
+
+func (c *Config) CancelforReal(idx int) {
+
+	dumptask := c.Currenttasks[idx-1]
+	c.Currenttasks = remove(c.Currenttasks, idx-1)
+	fmt.Println(dumptask)
+	can := c.ToCancelledTask(dumptask)
+	c.Cancelledtasks = append(c.Cancelledtasks, *can)
+
+	for i := range c.Currenttasks {
+		c.Currenttasks[i].Index = i + 1
+	}
+
+	c.SaveConfig()
+}
+
+func remove(slice []CurrentTasks, s int) []CurrentTasks {
+	return append(slice[:s], slice[s+1:]...)
 }
 
 func (c *Config) ListAllCurrentTasks() {
