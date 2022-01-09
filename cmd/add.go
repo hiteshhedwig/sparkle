@@ -29,7 +29,7 @@ var addCmd = &cobra.Command{
 	Short: "Add Todo to your list of tasks",
 	Long: `Usage of the command goes like. For example:
 
-	sparkle add Complete prototyping by 9PM
+	sparkle add "Complete prototyping by 9PM"
 `,
 	Run: func(cmd *cobra.Command, args []string) {
 		if len(args) == 0 {
