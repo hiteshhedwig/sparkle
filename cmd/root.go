@@ -66,7 +66,7 @@ func init() {
 	str = emoji.Sprint(":clipboard: A Pure Go Sparkle Todo CLI comes with a simple webservice. Which helps you to organize task much better!")
 	rootCmd.Long = str
 
-	datafile, _ = conn.LoadConfig()
+	datafile, _ = conn.LoadConfig("")
 	//print(datafile.Project)
 	/*
 		var conff con.Config

@@ -200,13 +200,13 @@ func fileExists(filename string) bool {
 	return !info.IsDir()
 }
 
-func LoadConfig() (*Config, error) {
+func LoadConfig(project string) (*Config, error) {
 
 	var config Config
 
 	if !fileExists(localfile) {
 		fmt.Printf("Setting up config file! \n")
-		config.Project = "TO setup!"
+		config.Project = project
 		configBytes, err := json.MarshalIndent(config, "", "   ")
 		if err != nil {
 			fmt.Print("Something Wrong happened", err)
