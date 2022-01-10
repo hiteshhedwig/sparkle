@@ -1,6 +1,7 @@
 package config
 
 import (
+	"bufio"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
@@ -60,6 +61,24 @@ func (c *Config) SetProjectName(name string) error {
 	fmt.Printf("Setting Project name from : %s ", c.Project)
 	c.Project = name
 	fmt.Printf("-> %s", name)
+	c.SaveConfig()
+	return nil
+}
+
+func (c *Config) UpdateTask(idx int) error {
+	var updatedtask string
+	idx = idx - 1
+	if idx > len(c.Currenttasks) {
+		return fmt.Errorf("OverBound")
+	}
+
+	fmt.Printf("Current task is : %s \n", c.Currenttasks[idx].Task)
+	fmt.Printf("Please type updated task  : ")
+	scanner := bufio.NewScanner(os.Stdin)
+	if scanner.Scan() {
+		updatedtask = scanner.Text()
+	}
+	c.Currenttasks[idx].Task = updatedtask
 	c.SaveConfig()
 	return nil
 }
