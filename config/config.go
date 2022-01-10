@@ -9,10 +9,21 @@ import (
 	"time"
 
 	"github.com/jedib0t/go-pretty/v6/table"
+	"github.com/kyokomi/emoji"
 	log "github.com/sirupsen/logrus"
 )
 
 const localfile = "./config.cfg"
+const (
+	colorReset  = "\033[0m"
+	colorRed    = "\033[31m"
+	colorGreen  = "\033[32m"
+	colorYellow = "\033[33m"
+	colorBlue   = "\033[34m"
+	colorPurple = "\033[35m"
+	colorCyan   = "\033[36m"
+	colorWhite  = "\033[37m"
+)
 
 type CompletedTask struct {
 	Index int
@@ -45,10 +56,43 @@ type Conversion interface {
 	ToCompletedTask() *CompletedTask
 }
 
-//user interface here!
-func (c *Config) ToCancelledTask(com CurrentTasks) *CancelledTask {
+func (c *Config) CompletedTask(idx int) error {
+	// idx check!
+	if idx > len(c.Currenttasks) {
+		fmt.Printf("%s Index value [%d] is not correct, Please check again in below table \n \n", string(colorRed), idx)
+		fmt.Printf("")
+		c.ListAllCurrentTasks()
+		return fmt.Errorf("Out of range")
+	}
 
-	log.Info("In here bro!")
+	donetask := c.Currenttasks[idx-1]
+	disp := emoji.Sprintf(":pizza:")
+	fmt.Printf(fmt.Sprintf("%s", disp))
+	fmt.Printf("%s You have completed the task : %s \n", string(colorGreen), donetask.Task)
+
+	c.Currenttasks = remove(c.Currenttasks, idx-1)
+	can := c.ToCompletedTask(donetask)
+	c.Completedtasks = append(c.Completedtasks, *can)
+
+	for i := range c.Currenttasks {
+		c.Currenttasks[i].Index = i + 1
+	}
+
+	c.SaveConfig()
+	return nil
+}
+
+func (c *Config) ToCompletedTask(com CurrentTasks) *CompletedTask {
+
+	return &CompletedTask{
+		Index: com.Index,
+		Task:  com.Task,
+		Time:  time.Now().Format("2006-01-02 3:4:5 pm"),
+	}
+
+}
+
+func (c *Config) ToCancelledTask(com CurrentTasks) *CancelledTask {
 
 	return &CancelledTask{
 		Index: com.Index,
@@ -58,7 +102,6 @@ func (c *Config) ToCancelledTask(com CurrentTasks) *CancelledTask {
 
 }
 
-//Cancel tasks: //should i implement with a linked list of tasks?
 func (c *Config) Cancel(idx int) {
 
 	var userin string
@@ -187,8 +230,6 @@ func (config Config) SaveConfig() {
 	if err != nil {
 		fmt.Print("Error writing device config!", err)
 	}
-
-	fmt.Print("Saved!\n")
 
 }
 
