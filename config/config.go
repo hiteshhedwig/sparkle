@@ -56,6 +56,14 @@ type Conversion interface {
 	ToCompletedTask() *CompletedTask
 }
 
+func (c *Config) SetProjectName(name string) error {
+	fmt.Printf("Setting Project name from : %s ", c.Project)
+	c.Project = name
+	fmt.Printf("-> %s", name)
+	c.SaveConfig()
+	return nil
+}
+
 func (c *Config) CompletedTask(idx int) error {
 	// idx check!
 	if idx > len(c.Currenttasks) {
