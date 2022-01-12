@@ -2,7 +2,6 @@ package config
 
 import (
 	"bufio"
-	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"os"
@@ -266,29 +265,18 @@ func (config Config) LoadFromTokenFile(tokenString string) (*Config, error) {
 	var conf Config
 
 	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
-		// Don't forget to validate the alg is what you expect:
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 			fmt.Errorf("Unexpected signing method: %v", token.Header["alg"])
 			return nil, fmt.Errorf("Unexpected signing method: %v", token.Header["alg"])
 		}
-
-		// hmacSampleSecret is a []byte containing your secret, e.g. []byte("my_secret_key")
 		return hmacSampleSecret, nil
 	})
-
-	//var conf Config
 	if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
-		//fmt.Println(claims["config"])
-		//conf := claims["config"]
 		maptoconfig(&conf, claims["config"])
 
 	} else {
 		fmt.Println(err)
 	}
-
-	//fmt.Println("REad")
-	//fmt.Println(config)
-
 	return &conf, nil
 }
 
@@ -297,17 +285,13 @@ func maptoconfig(temp *Config, config interface{}) {
 }
 
 func (config Config) SaveJwtConf() string {
-	// Create a new token object, specifying signing method and the claims
-	// you would like it to contain.
 	var hmacSampleSecret []byte
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
 		"config": config,
 	})
 
-	// Sign and get the complete encoded token as a string using the secret
 	tokenString, _ := token.SignedString(hmacSampleSecret)
 
-	//fmt.Println(tokenString)
 	return tokenString
 }
 
@@ -323,36 +307,19 @@ func LoadConfig(project string) (*Config, error) {
 
 	var config Config
 
-	if !fileExists(localfile) {
-		fmt.Printf("Setting up config file! \n")
-		//config.Project = project
-		configBytes, err := json.MarshalIndent(config, "", "   ")
-		if err != nil {
-			fmt.Print("Something Wrong happened", err)
-			return nil, err
-		}
-
-		err = ioutil.WriteFile(localfile, configBytes, os.ModePerm)
-
-		if err != nil {
-			fmt.Print("Error writing device config!", err)
-			return nil, err
-		}
-	} else {
+	if fileExists(localfile) {
 		configFile, err := os.Open(localfile)
 		if err != nil {
 			log.Error("Error opening device file", err)
 			return nil, err
 		}
-		// defer the closing of our jsonFile so that we can parse it later on
 		defer configFile.Close()
 		configBytes, _ := ioutil.ReadAll(configFile)
 		tokenloaded := string(configBytes)
-		//fmt.Println("loaded: ", string(configBytes))
 		conf, _ := config.LoadFromTokenFile(tokenloaded)
 		return conf, nil
 	}
 
-	return nil, nil
+	return &config, nil
 
 }
