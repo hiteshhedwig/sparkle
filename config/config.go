@@ -14,7 +14,7 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
-const localfile = "./sparkle.txt"
+const localfile = ".sparkle"
 
 const (
 	colorReset  = "\033[0m"
@@ -90,12 +90,12 @@ func (c *Config) CompletedTask(idx int) error {
 		fmt.Printf("%s Index value [%d] is not correct, Please check again in below table \n \n", string(colorRed), idx)
 		fmt.Printf("")
 		c.ListAllCurrentTasks()
-		return fmt.Errorf("Out of range")
+		return fmt.Errorf("out of range")
 	}
 
 	donetask := c.Currenttasks[idx-1]
 	disp := emoji.Sprintf(":pizza:")
-	fmt.Printf(fmt.Sprintf("%s", disp))
+	fmt.Println(disp)
 	fmt.Printf("%s You have completed the task : %s \n", string(colorGreen), donetask.Task)
 
 	c.Currenttasks = remove(c.Currenttasks, idx-1)
@@ -196,10 +196,9 @@ func (c *Config) ListTasksCatWise() {
 	t.SetOutputMirror(os.Stdout)
 	t.AppendHeader(table.Row{"Index", "Task", "Time"})
 
-	//typetask := []interface{}{000, "Current Task", " --"}
-	typetasks = append(typetasks, []interface{}{"--", "Current Task", " --"})
-	typetasks = append(typetasks, []interface{}{"--", "Completed Task", " --"})
-	typetasks = append(typetasks, []interface{}{"--", "Cancelled Task", " --"})
+	typetasks = append(typetasks, []interface{}{"******", "Current Task", "****************"})
+	typetasks = append(typetasks, []interface{}{"******", "Completed Task", "****************"})
+	typetasks = append(typetasks, []interface{}{"******", "Cancelled Task", "****************"})
 
 	for idx, typetask := range typetasks {
 		t.AppendSeparator()
@@ -250,7 +249,7 @@ func (config Config) SaveConfig() {
 
 	encrypted := config.SaveJwtConf()
 
-	file, err := os.Create("sparkle.txt")
+	file, err := os.Create(localfile)
 	if err != nil {
 		fmt.Println("Some error while saving", err)
 	}
@@ -278,10 +277,6 @@ func (config Config) LoadFromTokenFile(tokenString string) (*Config, error) {
 		fmt.Println(err)
 	}
 	return &conf, nil
-}
-
-func maptoconfig(temp *Config, config interface{}) {
-	temp.LoadFromMap(config)
 }
 
 func (config Config) SaveJwtConf() string {
@@ -322,4 +317,8 @@ func LoadConfig(project string) (*Config, error) {
 
 	return &config, nil
 
+}
+
+func maptoconfig(temp *Config, config interface{}) {
+	temp.LoadFromMap(config)
 }
