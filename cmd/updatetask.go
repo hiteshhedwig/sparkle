@@ -16,7 +16,6 @@ limitations under the License.
 package cmd
 
 import (
-	"fmt"
 	"strconv"
 
 	log "github.com/sirupsen/logrus"
