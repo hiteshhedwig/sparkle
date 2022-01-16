@@ -16,7 +16,6 @@ limitations under the License.
 package cmd
 
 import (
-	"fmt"
 	"strconv"
 
 	log "github.com/sirupsen/logrus"
@@ -33,14 +32,12 @@ var cancelCmd = &cobra.Command{
 		sparkle cancel 07
 `,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("cancel called")
 		if len(args) == 0 {
 			cmd.Help()
 			return
 		}
 		//more than one args mean deleting multiple tasks!
-		if len(args) > 0 {
-			log.Info(args)
+		if len(args) == 1 {
 			idx, err := strconv.Atoi(args[0])
 			if err != nil {
 				log.Error("Please pass valid argument - ", err)

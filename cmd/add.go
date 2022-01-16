@@ -32,13 +32,13 @@ var addCmd = &cobra.Command{
 	sparkle add "Complete prototyping by 9PM"
 `,
 	Run: func(cmd *cobra.Command, args []string) {
-		if len(args) == 0 {
+		if len(args) != 1 {
+			fmt.Println("required arguments not provided")
 			cmd.Help()
 			return
 		}
-		//fmt.Println("add called", args)
+
 		str := strings.Join(args, " ")
-		//adding then save config file
 		datafile.AddToCurrentTasks(str)
 		datafile.SaveConfig()
 		disp := emoji.Sprintf(":memo: Added to List !! - %s", str)

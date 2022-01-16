@@ -34,13 +34,12 @@ sparkle finish 1
 Make sure you are providing index of the task you wish to finish.
 	`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("finish called")
 		if len(args) == 0 {
 			cmd.Help()
 			return
 		}
 		//more than one args mean deleting multiple tasks!
-		if len(args) > 0 {
+		if len(args) == 1 {
 			idx, err := strconv.Atoi(args[0])
 			if err != nil {
 				log.Error("Please pass valid argument - ", err)

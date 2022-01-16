@@ -32,10 +32,8 @@ var listCmd = &cobra.Command{
 		allstatus, _ := cmd.Flags().GetBool("cat")
 		//category, _ := cmd.Flags().GetBool("cat")
 		if !allstatus {
-			print("All status \n")
 			datafile.ListAllCurrentTasks()
 		} else {
-			print("No status \n")
 			datafile.ListTasksCatWise()
 		}
 	},
