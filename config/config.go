@@ -199,12 +199,19 @@ func remove(slice []CurrentTasks, s int) []CurrentTasks {
 	return append(slice[:s], slice[s+1:]...)
 }
 
-func (c *Config) ListAllCurrentTasks() {
+func (c Config) CheckCurrentTask() {
+	if len(c.Currenttasks) == 0 && len(c.Cancelledtasks) == 0 && len(c.Completedtasks) == 0 {
+		fmt.Println("No Task Found! Start around adding them, try :")
+		fmt.Println("     sparkle add --help")
+	}
+}
+
+func (c Config) ListAllCurrentTasks() {
 
 	t := table.NewWriter()
 	t.SetOutputMirror(os.Stdout)
 	t.AppendHeader(table.Row{"Index", "Task", "Time"})
-
+	c.CheckCurrentTask()
 	for _, currenttask := range c.Currenttasks {
 		t.AppendSeparator()
 		t.AppendRow([]interface{}{currenttask.Index, currenttask.Task, currenttask.Time})
