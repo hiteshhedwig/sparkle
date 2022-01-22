@@ -23,14 +23,16 @@ import (
 var listCmd = &cobra.Command{
 	Use:   "list",
 	Short: "Prints out all the current task in the bucket",
-	Long: `Prints out all the current task in the bucket
+	Long: `Prints out all the task recorded
 	For example:
-		sparkle list   //Prints out all the tasks
-		sparkle list --cat //Prints out all the tasks categorywise
+		-> Prints out all the current tasks
+		sparkle list  
+
+		-> Prints out all the tasks categorywise
+		sparkle list --cat 
 	`,
 	Run: func(cmd *cobra.Command, args []string) {
 		allstatus, _ := cmd.Flags().GetBool("cat")
-		//category, _ := cmd.Flags().GetBool("cat")
 		if !allstatus {
 			datafile.ListAllCurrentTasks()
 		} else {
