@@ -1,4 +1,4 @@
-name: hello-yourname
+name: sparkle-git-todo
 version: '2.10'
 summary: GNU Hello, the "hello world" snap
 description: GNU hello prints a friendly greeting.
