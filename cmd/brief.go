@@ -22,8 +22,10 @@ import (
 // briefCmd represents the brief command
 var briefCmd = &cobra.Command{
 	Use:   "brief",
-	Short: "A brief description of your todos",
-	Long:  ``,
+	Short: "A brief summary of your todos",
+	Long: `example :
+		sparkle brief
+	`,
 	Run: func(cmd *cobra.Command, args []string) {
 		if len(args) > 0 {
 			cmd.Help()
@@ -36,6 +38,7 @@ var briefCmd = &cobra.Command{
 }
 
 func init() {
+
 	rootCmd.AddCommand(briefCmd)
 
 	// Here you will define your flags and configuration settings.
