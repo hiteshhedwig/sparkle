@@ -66,6 +66,32 @@ func (c *Config) SetProjectName(name string) error {
 	return nil
 }
 
+func (c Config) DisplayBrief() {
+	proj := c.Project
+	totallen := len(c.Cancelledtasks) + len(c.Completedtasks) + len(c.Currenttasks)
+	currenttasklen := len(c.Currenttasks)
+	compllen := len(c.Completedtasks)
+	canclen := len(c.Cancelledtasks)
+	fmt.Printf("Brief : \n\t %s Project Name : %s ", string(colorWhite), proj)
+	fmt.Printf("        \n\t %s Total registered task in your project : %d ", string(colorWhite), totallen)
+	fmt.Printf("		\n\t %s Total ongoing tasks in your project : %d ", string(colorWhite), currenttasklen)
+	fmt.Printf("		\n\t %s Total completed tasks in your project : %d ", string(colorWhite), compllen)
+	fmt.Printf("		\n\t %s Total cancelled tasks in your project : %d ", string(colorWhite), canclen)
+
+	if currenttasklen != 0 {
+		efficiency := float32(compllen) / float32(currenttasklen+compllen)
+		ef := fmt.Sprintf("%.2f", efficiency)
+		if efficiency > 0.70 {
+			fmt.Printf("		\n\t %s Overall efficiency: %s ", string(colorGreen), ef)
+		} else if efficiency < 0.70 && efficiency > 0.40 {
+			fmt.Printf("		\n\t %s Overall efficiency: %s ", string(colorYellow), ef)
+		} else if efficiency < 0.40 {
+			fmt.Printf("		\n\t %s Overall efficiency: %s ", string(colorRed), ef)
+		}
+	}
+
+}
+
 func (c *Config) UpdateTask(idx int) error {
 	var updatedtask string
 	idx = idx - 1
