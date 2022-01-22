@@ -25,12 +25,16 @@ import (
 // cancelCmd represents the cancel command
 var cancelCmd = &cobra.Command{
 	Use:   "cancel",
-	Short: "will cancel the particular task by index",
-	Long: `This command helps you cancel a specific task or a list of task. It is achived via knowing passing index of the task(s)
+	Short: "✖️ cancel the particular task by index",
+	Long: `This command helps you cancel a specific task. Just pass the index in argument.
 	You can know index by : sparkle list --cat
 	. For example:
-		sparkle cancel 07
-`,
+		sparkle cancel 7
+
+	NOTE : it always cancel task from current list of task. If you wanna do remove task from other categories, consider
+			sparkle purge --help
+		`,
+
 	Run: func(cmd *cobra.Command, args []string) {
 		if len(args) == 0 {
 			cmd.Help()

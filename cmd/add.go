@@ -26,8 +26,8 @@ import (
 // addCmd represents the add command
 var addCmd = &cobra.Command{
 	Use:   "add",
-	Short: "Add Todo to your list of tasks",
-	Long: `Usage of the command goes like. For example:
+	Short: "🖋 Add Todo to your list of tasks",
+	Long: `Add Todo to your list of tasks. For example:
 
 	sparkle add "Complete prototyping by 9PM"
 `,
@@ -42,8 +42,10 @@ var addCmd = &cobra.Command{
 		datafile.AddToCurrentTasks(str)
 		datafile.SaveConfig()
 		disp := emoji.Sprintf(":memo: Added to List !! - %s", str)
+
 		fmt.Print(disp)
 		fmt.Printf("\n")
+		//fmt.Errorf(12)
 
 	},
 }

@@ -26,7 +26,7 @@ import (
 // finishCmd represents the finish command
 var finishCmd = &cobra.Command{
 	Use:   "finish",
-	Short: "will allow you to change status of a task to `finished`",
+	Short: "👏🏻allow you to change status of a task to `finished`",
 	Long: `For example: You can use below command to change the status of a task at index 1 
 
 sparkle finish 1
