@@ -11,7 +11,6 @@ import (
 	"github.com/golang-jwt/jwt"
 	"github.com/jedib0t/go-pretty/v6/table"
 	"github.com/kyokomi/emoji"
-	log "github.com/sirupsen/logrus"
 )
 
 const localfile = ".sparkle"
@@ -110,6 +109,18 @@ func (c *Config) UpdateTask(idx int) error {
 	return nil
 }
 
+func (c *Config) PurgeTask(idx int) {
+	if idx > len(c.Cancelledtasks) {
+		fmt.Printf("%s Index value [%d] is not correct, Please check again in below table \n \n", string(colorRed), idx)
+		fmt.Printf("")
+		c.ListTasksCatWise()
+		return
+	}
+
+	c.PurgeforReal(idx)
+
+}
+
 func (c *Config) CompletedTask(idx int) error {
 	// idx check!
 	if idx > len(c.Currenttasks) {
@@ -161,7 +172,6 @@ func (c *Config) Cancel(idx int) {
 	var userin string
 
 	dumptask := c.Currenttasks[idx-1]
-	log.Info(dumptask)
 	fmt.Println("Are you sure you want to cancel this task? ", dumptask.Task)
 	fmt.Print("Type yes/no to confirm cancellation : ")
 	fmt.Scanf("%s", &userin)
@@ -180,6 +190,14 @@ func (c *Config) Cancel(idx int) {
 
 }
 
+func (c *Config) PurgeforReal(idx int) {
+
+	dumptask := c.Cancelledtasks[idx-1]
+	fmt.Println("Purging : ", dumptask.Task)
+	c.Cancelledtasks = removefromCancel(c.Cancelledtasks, idx-1)
+	c.SaveConfig()
+}
+
 func (c *Config) CancelforReal(idx int) {
 
 	dumptask := c.Currenttasks[idx-1]
@@ -196,6 +214,10 @@ func (c *Config) CancelforReal(idx int) {
 }
 
 func remove(slice []CurrentTasks, s int) []CurrentTasks {
+	return append(slice[:s], slice[s+1:]...)
+}
+
+func removefromCancel(slice []CancelledTask, s int) []CancelledTask {
 	return append(slice[:s], slice[s+1:]...)
 }
 
@@ -338,7 +360,7 @@ func LoadConfig(project string) (*Config, error) {
 	if fileExists(localfile) {
 		configFile, err := os.Open(localfile)
 		if err != nil {
-			log.Error("Error opening device file", err)
+			fmt.Errorf("Error opening device file %v", err)
 			return nil, err
 		}
 		defer configFile.Close()

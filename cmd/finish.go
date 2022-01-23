@@ -19,7 +19,6 @@ import (
 	"fmt"
 	"strconv"
 
-	log "github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
 )
 
@@ -42,7 +41,7 @@ Make sure you are providing index of the task you wish to finish.
 		if len(args) == 1 {
 			idx, err := strconv.Atoi(args[0])
 			if err != nil {
-				log.Error("Please pass valid argument - ", err)
+				fmt.Errorf("Please pass valid argument - %v", err)
 				cmd.Help()
 				return
 			}

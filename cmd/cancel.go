@@ -16,9 +16,9 @@ limitations under the License.
 package cmd
 
 import (
+	"fmt"
 	"strconv"
 
-	log "github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
 )
 
@@ -44,7 +44,7 @@ var cancelCmd = &cobra.Command{
 		if len(args) == 1 {
 			idx, err := strconv.Atoi(args[0])
 			if err != nil {
-				log.Error("Please pass valid argument - ", err)
+				fmt.Errorf("Please pass valid argument - %v", err)
 				cmd.Help()
 				return
 			}
