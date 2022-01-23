@@ -22,7 +22,7 @@ import (
 // projectnameCmd represents the projectname command
 var projectnameCmd = &cobra.Command{
 	Use:   "projectname",
-	Short: "reset project name",
+	Short: "⌛️ reset project name",
 	Long: `allows you to reset project name. For example : 
 
 			sparkle projectname "thunderbird"

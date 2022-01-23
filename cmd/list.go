@@ -22,8 +22,8 @@ import (
 // listCmd represents the list command
 var listCmd = &cobra.Command{
 	Use:   "list",
-	Short: "Prints out all the current task in the bucket",
-	Long: `Prints out all the task recorded
+	Short: "🔗 Prints out all the current task in the bucket",
+	Long: `prints out all the task recorded
 	For example:
 		-> Prints out all the current tasks
 		sparkle list  

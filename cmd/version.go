@@ -24,8 +24,8 @@ import (
 // versionCmd represents the version command
 var versionCmd = &cobra.Command{
 	Use:   "version",
-	Short: "Prints running version of the application",
-	Long: `Prints running version of the application.
+	Short: "🔸 Prints running version of the application",
+	Long: ` Prints running version of the application.
 	 For example:
 	   sparkle version
 

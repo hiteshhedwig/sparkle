@@ -22,7 +22,7 @@ import (
 // briefCmd represents the brief command
 var briefCmd = &cobra.Command{
 	Use:   "brief",
-	Short: "A brief summary of your todos",
+	Short: "🪄  A brief summary of your todos",
 	Long: `example :
 		sparkle brief
 	`,

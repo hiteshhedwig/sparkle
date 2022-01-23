@@ -25,7 +25,7 @@ import (
 // purgeCmd represents the purge command
 var purgeCmd = &cobra.Command{
 	Use:   "purge",
-	Short: "purge specific task ",
+	Short: "⚔️ purge specific task ",
 	Long: `Command helps you purging specific task from cancelled list. For example:
 
 	Note : you will only be able to purge a task from cancelled list. If you want

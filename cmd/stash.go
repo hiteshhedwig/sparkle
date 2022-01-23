@@ -27,7 +27,7 @@ import (
 // stashCmd represents the stash command
 var stashCmd = &cobra.Command{
 	Use:   "stash",
-	Short: "allows you to stash your working files to git ",
+	Short: "📂 allows you to stash your working files to git ",
 	Long: `It is just "git add [flags]"
 	 For example:
 
