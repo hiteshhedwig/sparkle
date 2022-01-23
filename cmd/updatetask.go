@@ -24,7 +24,7 @@ import (
 // updatetaskCmd represents the updatetask command
 var updatetaskCmd = &cobra.Command{
 	Use:   "updatetask",
-	Short: "update current listed task",
+	Short: "🔏 update current listed task",
 	Long: `Allows you to update a particular task. Just provide index to the flag For example :
 
 		-> sparkle updatetask [flag]
