@@ -20,7 +20,6 @@ import (
 	"fmt"
 	"os/exec"
 
-	"github.com/kyokomi/emoji"
 	"github.com/spf13/cobra"
 )
 
@@ -56,8 +55,7 @@ var stashCmd = &cobra.Command{
 			fmt.Println("Error ", err)
 			return
 		}
-		disp := emoji.Sprintf(":hook: Files has been stashed. Please proceed with git commit -")
-		fmt.Print(disp)
+		fmt.Print("🗳 Files has been stashed. Please proceed with git commit -")
 		fmt.Printf("\n")
 
 	},

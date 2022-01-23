@@ -19,7 +19,6 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/kyokomi/emoji"
 	"github.com/spf13/cobra"
 )
 
@@ -41,11 +40,10 @@ var addCmd = &cobra.Command{
 		str := strings.Join(args, " ")
 		datafile.AddToCurrentTasks(str)
 		datafile.SaveConfig()
-		disp := emoji.Sprintf(":memo: Added to List !! - %s", str)
+		disp := fmt.Sprintf("📋 Added to List !! - %s", str)
 
 		fmt.Print(disp)
 		fmt.Printf("\n")
-		//fmt.Errorf(12)
 
 	},
 }

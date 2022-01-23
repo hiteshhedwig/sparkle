@@ -19,7 +19,6 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/kyokomi/emoji"
 	"github.com/spf13/cobra"
 
 	"github.com/spf13/viper"
@@ -68,7 +67,7 @@ func Execute() {
 
 func init() {
 
-	str = emoji.Sprint(":clipboard: A Pure Go CLI Todo tool. Which helps you to organize task in a much better way.")
+	str = fmt.Sprint("📝 A Pure Go CLI Todo tool. Which helps you to organize task in a much better way.")
 	rootCmd.Long = str
 
 	datafile, _ = conn.LoadConfig("")

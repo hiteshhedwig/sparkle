@@ -10,7 +10,6 @@ import (
 
 	"github.com/golang-jwt/jwt"
 	"github.com/jedib0t/go-pretty/v6/table"
-	"github.com/kyokomi/emoji"
 )
 
 const localfile = ".sparkle"
@@ -133,8 +132,7 @@ func (c *Config) CompletedTask(idx int) error {
 	}
 
 	donetask := c.Currenttasks[idx-1]
-	disp := emoji.Sprintf(":pizza:")
-	fmt.Println(disp)
+	fmt.Println("🥧")
 	fmt.Printf("%s You have completed the task : %s \n", string(colorGreen), donetask.Task)
 
 	c.Currenttasks = remove(c.Currenttasks, idx-1)
