@@ -20,9 +20,11 @@ sparkle projectname "sparkle-todos"
 ```
 
 List your todos :
+
 By default below command will provide you current ongoing task.
 [![carbon-10.png](https://i.postimg.cc/rpK522ZL/carbon-10.png)](https://postimg.cc/7Cr5SdyB)
-a
+
+
 📎 : In order to display whole category wise list try adding "cat" 
 ```
 sparkle list --cat
@@ -30,5 +32,6 @@ sparkle list --cat
 
 
 Review your todo summary :
+
 [![carbon-9.png](https://i.postimg.cc/TwwBn1PW/carbon-9.png)](https://postimg.cc/3ysLTKmK)
 
