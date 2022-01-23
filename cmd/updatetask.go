@@ -24,34 +24,31 @@ import (
 // updatetaskCmd represents the updatetask command
 var updatetaskCmd = &cobra.Command{
 	Use:   "updatetask",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
+	Short: "update current listed task",
+	Long: `Allows you to update a particular task. Just provide index to the flag For example :
 
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+		-> sparkle updatetask [flag]
+		   sparkle updatetask 1
+	
+	`,
 	Run: func(cmd *cobra.Command, args []string) {
 
-		if len(args) == 0 {
+		if len(args) != 1 {
 			cmd.Help()
 			return
 		}
-		if len(args) == 1 {
-			idx, err := strconv.Atoi(args[0])
-			if err != nil {
-				cmd.Help()
-				return
-			}
 
-			err = datafile.UpdateTask(idx)
-			if err != nil {
-				cmd.Help()
-			}
-			cleanup()
-		} else {
+		idx, err := strconv.Atoi(args[0])
+		if err != nil {
+			cmd.Help()
+			return
+		}
+
+		err = datafile.UpdateTask(idx)
+		if err != nil {
 			cmd.Help()
 		}
+		cleanup()
 
 	},
 }

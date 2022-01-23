@@ -27,15 +27,15 @@ import (
 // stashCmd represents the stash command
 var stashCmd = &cobra.Command{
 	Use:   "stash",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
+	Short: "allows you to stash your working files to git ",
+	Long: `It is just "git add [flags]"
+	 For example:
 
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	 		sparkle add "cmd/config.go cmd/root.go"
+
+	 `,
 	Run: func(cmd *cobra.Command, args []string) {
-		if len(args) == 0 {
+		if len(args) != 1 {
 			cmd.Help()
 			return
 		}
