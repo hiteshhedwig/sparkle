@@ -72,21 +72,22 @@ func (c Config) DisplayBrief() {
 	compllen := len(c.Completedtasks)
 	canclen := len(c.Cancelledtasks)
 	fmt.Println("         \t\t    SUMMARY 🪶                  ")
-	fmt.Printf("        \n\t %s Project Name : %s ", string(colorWhite), proj)
-	fmt.Printf("        \n\t %s Total registered task in your project : %d ", string(colorWhite), totallen)
-	fmt.Printf("		\n\t %s Total ongoing tasks in your project : %d ", string(colorWhite), currenttasklen)
-	fmt.Printf("		\n\t %s Total completed tasks in your project : %d ", string(colorWhite), compllen)
-	fmt.Printf("		\n\t %s Total cancelled tasks in your project : %d ", string(colorWhite), canclen)
+	fmt.Printf("        \n\t %s ⌛️ Project Name : %s ", string(colorWhite), proj)
+	fmt.Printf("        \n\t %s 🪝  Total registered task in your project : %d ", string(colorWhite), totallen)
+	fmt.Printf("		\n\t %s 🖋  Total ongoing tasks in your project : %d ", string(colorWhite), currenttasklen)
+	fmt.Printf("		\n\t %s 📌 Total completed tasks in your project : %d ", string(colorWhite), compllen)
+	fmt.Printf("		\n\t %s ✖️  Total cancelled tasks in your project : %d ", string(colorWhite), canclen)
 
-	if currenttasklen != 0 {
+	if (currenttasklen + compllen) != 0 {
 		efficiency := float32(compllen) / float32(currenttasklen+compllen)
 		ef := fmt.Sprintf("%.2f", efficiency)
-		if efficiency > 0.70 {
-			fmt.Printf("		\n\t %s Overall efficiency: %s ", string(colorGreen), ef)
+
+		if efficiency >= 0.70 {
+			fmt.Printf("		\n\t %s 🚀 Overall efficiency: %s ", string(colorGreen), ef)
 		} else if efficiency < 0.70 && efficiency > 0.40 {
-			fmt.Printf("		\n\t %s Overall efficiency: %s ", string(colorYellow), ef)
-		} else if efficiency < 0.40 {
-			fmt.Printf("		\n\t %s Overall efficiency: %s ", string(colorRed), ef)
+			fmt.Printf("		\n\t %s 🌫  Overall efficiency: %s ", string(colorYellow), ef)
+		} else if efficiency <= 0.40 {
+			fmt.Printf("		\n\t %s ⚠️  Overall efficiency: %s ", string(colorRed), ef)
 		}
 	}
 
