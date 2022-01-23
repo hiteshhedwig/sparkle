@@ -143,6 +143,10 @@ func (c *Config) CompletedTask(idx int) error {
 		c.Currenttasks[i].Index = i + 1
 	}
 
+	for i := range c.Completedtasks {
+		c.Completedtasks[i].Index = i + 1
+	}
+
 	c.SaveConfig()
 	return nil
 }
@@ -181,7 +185,6 @@ func (c *Config) Cancel(idx int) {
 		fmt.Println("Aborting")
 		return
 	case "yes":
-		fmt.Println("ok to cancel this task")
 		c.CancelforReal(idx)
 	default:
 		fmt.Println("Aborting")
@@ -202,7 +205,6 @@ func (c *Config) CancelforReal(idx int) {
 
 	dumptask := c.Currenttasks[idx-1]
 	c.Currenttasks = remove(c.Currenttasks, idx-1)
-	fmt.Println(dumptask)
 	can := c.ToCancelledTask(dumptask)
 	c.Cancelledtasks = append(c.Cancelledtasks, *can)
 
@@ -210,6 +212,10 @@ func (c *Config) CancelforReal(idx int) {
 		c.Currenttasks[i].Index = i + 1
 	}
 
+	for i := range c.Cancelledtasks {
+		c.Cancelledtasks[i].Index = i + 1
+	}
+	fmt.Println("Task cancelled")
 	c.SaveConfig()
 }
 
