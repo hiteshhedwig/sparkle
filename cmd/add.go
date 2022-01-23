@@ -32,7 +32,7 @@ var addCmd = &cobra.Command{
 `,
 	Run: func(cmd *cobra.Command, args []string) {
 		if len(args) != 1 {
-			fmt.Println("required arguments not provided")
+			fmt.Println("required arguments not provided, perhaps try double quotes")
 			cmd.Help()
 			return
 		}
