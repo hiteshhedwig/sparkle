@@ -30,7 +30,7 @@ var stashCmd = &cobra.Command{
 	Long: `It is just "git add [flags]"
 	 For example:
 
-	 		sparkle add "cmd/config.go cmd/root.go"
+	 		sparkle stash "cmd/config.go cmd/root.go"
 
 	 `,
 	Run: func(cmd *cobra.Command, args []string) {
