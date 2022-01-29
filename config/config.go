@@ -187,7 +187,7 @@ func (c *Config) Cancel(idx int) {
 	case "yes":
 		c.CancelforReal(idx)
 	default:
-		fmt.Println("Aborting")
+		fmt.Println("Aborting -- please choose either no/yes")
 		return
 	}
 
