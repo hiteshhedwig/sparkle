@@ -30,3 +30,10 @@ changelog:
     exclude:
       - '^docs:'
       - '^test:'
+brews:
+- name: sparkle
+  homepage: https://github.com/hiteshhedwig/homebrew-tools 
+  tap:
+    owner: hiteshhedwig
+    name: homebrew-tools
+
