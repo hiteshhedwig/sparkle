@@ -64,6 +64,15 @@ sudo sh -c "echo 'deb [trusted=yes] https://sparkle.jfrog.io/artifactory/sparkle
 sudo apt update && sudo apt-get install sparkle-todo
 ```
 
+### Windows :
+
+Download the [windows binary](https://github.com/hiteshhedwig/sparkle/releases/tag/v0.1.1)
+
+After downloading, extract it in your system. I would suggest create a folder in C drive Program Files named "sparkle" and paste 
+the extracted .exe file there.
+
+and follow these [steps](https://stackoverflow.com/a/41895179/8740644). They work on point
+
 
 ### Usage
 
