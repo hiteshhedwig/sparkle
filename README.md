@@ -51,6 +51,20 @@
 
 ### Install
 
+#### MacOS installation :
+
+```
+brew tap hiteshhedwig/tools
+brew install sparkle
+```
+
+#### Ubuntu AMD64 installation:
+```
+sudo sh -c "echo 'deb [trusted=yes] https://sparkle.jfrog.io/artifactory/sparkletodo-debian-local trusty main' >> /etc/apt/sources.list"
+sudo apt update && sudo apt-get install sparkle-todo
+```
+
+
 ### Usage
 
 [![carbon-7.png](https://i.postimg.cc/Bbq2Pf6t/carbon-7.png)](https://postimg.cc/ZBMWXg6h)
